@@ -1,0 +1,144 @@
+* {
+	margin: 0px;
+	border: 0px;
+	font-family: Helvetica, "Trebuchet MS", Verdana, sans-serif;
+}
+
+body {
+	background-image: linear-gradient(to right, #c89090, rgb(255, 255, 207));
+}
+
+.header {
+	display: grid;
+	grid-template-columns: 16.5% 16.5% 16.5% 40% 10%;
+}
+
+.flag {
+	border-radius: 0 30px 30px 0;
+	background-color: #996347;
+	width: 10em;
+	color: #c1dee2;
+}
+.flag h3 {
+	text-align: center;
+	padding-top: 1vh;
+	font-size: max(calc(3vh), 1em);
+}
+
+.header h2 {
+	font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+	font-size: max(calc(3vh), 1em);
+
+	text-align: center;
+	color: #606060;
+	padding-top: 1vh;
+	margin-top: 1vh;
+	margin-bottom: 1vh;
+	margin-right: 1vh;
+}
+
+.wrapper {
+	display: grid;
+	grid-template-columns: 59% 40%;
+	grid-template-rows: 20vh 80vh;
+}
+
+#myVideo {
+	height: auto;
+	width: 40vw;
+	box-shadow: 10px 10px 25px black;
+}
+
+.mainTitle h1 {
+	color: white;
+	font-size: calc(3vh + 3vw);
+	padding-top: 5vh;
+	text-align: center;
+}
+
+.rightside {
+	background-color: white;
+}
+.mainTitle {
+	box-shadow: 10px 10px 25px black;
+	margin-top: 5%;
+	color: white;
+	grid-row: 1 / span 2;
+	background-color: #273952;
+	margin-left: 5vw;
+	margin-right: 5vw;
+}
+
+.mainTitle p {
+	padding: 5%;
+	font-size: calc(0.8vh + 0.8vw);
+}
+.mainTitle #title {
+	padding: 5%;
+}
+.stats {
+	animation: appear 1s ease-in 1;
+	display: grid;
+	grid-template-columns: 10% 50% 20%;
+	grid-template-rows: 33% 33% 33%;
+	height: auto;
+}
+
+.stats h2 {
+	font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+	text-align: center;
+	font-size: calc(1vh + 1vw);
+}
+
+.stats img {
+	margin-left: 13%;
+	width: 63%;
+	height: auto;
+	float: right;
+}
+
+.stats div {
+	width: 0;
+	height: 50%;
+	margin-top: 2%;
+}
+
+.stats div:nth-of-type(1) {
+	background-color: blue;
+}
+
+.stats div:nth-of-type(3) {
+	background-color: orange;
+}
+
+.stats div:nth-of-type(5) {
+	background-color: green;
+}
+
+@keyframes extend {
+	0% {
+		width: 1%;
+	}
+	100% {
+		width: 100%;
+	}
+}
+
+@keyframes appear {
+	0% {
+		opacity: 0;
+		margin-top: 5vh;
+	}
+	100% {
+		opacity: 1;
+		margin-top: 0;
+	}
+}
+
+/* wrapper 2 */
+
+.wrapper2 {
+	width: 100%;
+	height: 50vh;
+	background-color: black;
+}
