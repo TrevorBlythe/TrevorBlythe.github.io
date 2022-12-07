@@ -13,3 +13,5 @@ setTimeout(() => {
 setTimeout(() => {
 	document.getElementById("statThree").style.animation = "extend 1s forwards 1";
 }, 1400);
+
+//wrapper 2 effect

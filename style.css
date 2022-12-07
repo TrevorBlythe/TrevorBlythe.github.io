@@ -16,7 +16,7 @@ body {
 .flag {
 	border-radius: 0 30px 30px 0;
 	background-color: #996347;
-	width: 10em;
+	width: 200px;
 	color: #c1dee2;
 }
 .flag h3 {
@@ -44,6 +44,7 @@ body {
 }
 
 #myVideo {
+	margin-top: 3%;
 	height: auto;
 	width: 40vw;
 	box-shadow: 10px 10px 25px black;
@@ -60,7 +61,7 @@ body {
 	background-color: white;
 }
 .mainTitle {
-	box-shadow: 10px 10px 25px black;
+	/* box-shadow: 10px 10px 25px black; */
 	margin-top: 5%;
 	color: white;
 	grid-row: 1 / span 2;
@@ -69,9 +70,17 @@ body {
 	margin-right: 5vw;
 }
 
+.mainTitle:hover {
+	animation: goUp 0.3s linear 1 forwards;
+}
+
+/* .mainTitle:not(:hover) {
+	animation: goUp 0.3s linear 1 reverse;
+} */
+
 .mainTitle p {
 	padding: 5%;
-	font-size: calc(0.8vh + 0.8vw);
+	font-size: max(calc(0.8vh + 0.8vw), 1em);
 }
 .mainTitle #title {
 	padding: 5%;
@@ -124,14 +133,21 @@ body {
 	}
 }
 
-@keyframes appear {
+@keyframes extend {
 	0% {
-		opacity: 0;
-		margin-top: 5vh;
+		width: 1%;
 	}
 	100% {
-		opacity: 1;
-		margin-top: 0;
+		width: 100%;
+	}
+}
+
+@keyframes goUp {
+	0% {
+		box-shadow: none;
+	}
+	100% {
+		box-shadow: 10px 10px 25px black;
 	}
 }
 
@@ -139,6 +155,8 @@ body {
 
 .wrapper2 {
 	width: 100%;
-	height: 50vh;
-	background-color: black;
+	height: 75vh;
+	display: grid;
+	grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+	grid-template-rows: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
 }
