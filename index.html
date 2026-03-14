@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+	<!-- Dont steal -->
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Trevor Blythe | Systems Architect</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<div id="trap-overlay">
+			<div class="termination-warning" id="term-warn">SESSION TERMINATION EMINENT</div>
+			<div class="trap-content">
+				<h1 class="eerie-text">YOU SHOULD HAVE NEVER CAME HERE</h1>
+				<p class="trap-timer">I HAVE TRAPPED YOU HERE FOR <span id="timer-count">0</span> SECONDS</p>
+			</div>
+		</div>
+		<canvas id="bg-particles"></canvas>
+		<div id="fake-cursor"></div>
+		<div id="trap-warning">YOU AINT GOIN NOWHERE</div>
+		<div class="terminal-grid"></div>
+		
+		<header class="header">
+			<div class="header-nav">
+				<h2 id="nav-about" class="scramble" data-text="ABOUT_ME">ABOUT_ME</h2>
+				<h2 id="nav-contact" class="scramble" data-text="CONTACT">CONTACT</h2>
+				<h2 id="nav-projects" class="scramble" data-text="PROJECTS">PROJECTS</h2>
+				<button id="leave-btn" class="leave-btn">Leave Site</button>
+			</div>
+			<div class="status-label">[ Welcome ]</div>
+		</header>
+
+		<main class="wrapper">
+			<article id="dynamic-content" class="main-content">
+				<div class="status-label">[ 2026.03.13 ] [ Welcome to my site ]</div>
+				<h1 id="title" class="scramble" data-text="Trevor Blythe">Trevor Blythe</h1>
+
+				<div class="flag">EDUCATION</div>
+				<p>
+					Arkansas State University<br>
+					BS in Computer Science, Mathematics<br>
+					GPA: 3.51 / 4.00 | Expected Graduation: May 2026<br>
+					Awards: Honors, Deans List
+				</p>
+
+				<div class="flag">TECHNICAL_SKILLS</div>
+				<p>
+					LANGUAGES: JavaScript, C++, Rust, Java, Python<br>
+					TOOLS: Git, Node/Bun, Firebase, MySQL, Pytorch/ML, Cloud, React/Svelte
+				</p>
+
+				<div class="flag">WORK_EXPERIENCE</div>
+				<p>
+					<strong>Research/Work Study @ Arkansas State University</strong><br>
+					[ August 2024 – 2026 ]<br>
+					• Programmed micro-controllers to communicate while airborne.<br>
+					• Robotic arm controlled by VR headset.<br>
+					• Developed React/NextJS/Payload websites & custom scripts.
+				</p>
+				
+				<div class="status-label">[ The end ]</div>
+			</article>
+
+			<aside class="sidebar">
+				<div class="profile-pic-space">
+					<img src="profile.jpg" alt="Trevor Blythe" class="profile-img">
+				</div>
+
+				<div id="stats" class="stats">
+					<div class="flag">SYSTEM_DIAGNOSTICS</div>
+										<div class="stat-item">
+							<div class="stat-label">JS</div>
+							<div class="stat-bar-container">
+								<div class="stat-bar" id="statOne" style="width: 85%"></div>
+							</div>
+							<div class="stat-counter" id="statOneCounter">85%</div>
+						</div>
+						<div class="stat-item">
+							<div class="stat-label">C++</div>
+							<div class="stat-bar-container">
+								<div class="stat-bar" id="statTwo" style="width: 45%"></div>
+							</div>
+							<div class="stat-counter" id="statTwoCounter">45%</div>
+						</div>
+						<div class="stat-item">
+							<div class="stat-label">RUST</div>
+							<div class="stat-bar-container">
+								<div class="stat-bar" id="statThree" style="width: 60%"></div>
+							</div>
+							<div class="stat-counter" id="statThreeCounter">60%</div>
+						</div>
+
+					<div class="status-label">[ LOG: CORE_METRICS_LOADED ]</div>
+					
+					<div class="flag">WATCHER_TERMINAL</div>
+					<div id="watcher-panel" class="watcher-panel">
+						<div class="watcher-line">[ SYSTEM ] Initializing surveillance...</div>
+					</div>
+					
+				</div>
+
+				<div class="stats">
+					<div class="flag">Message from me</div>
+					<div class="user-panel-content">
+						Programming is just telling the computer what to do.<br>
+						I would choose the tool that makes it easiest.<br>
+						Complicated things, are made of simpler things.<br>
+						AI is correlated with data breaches.<br>
+						Ive done all of this: 
+						Microcontrollers, Hosted a website (not this), <br>
+						A multiplayer game, neural networks from scratch <br>
+						Rust, C++, others, <br>
+						but most importantly i can prompt chatgpt.
+					</div>
+				</div>
+
+				<!-- <div class="copy-hint">[ SYSTEM_HINT: TRY COPYING TEXT ]</div> -->
+			</aside>
+		</main>
+
+		<footer class="wrapper2" id="wrapper2">
+			<canvas id="fractal-canvas"></canvas>
+		</footer>
+
+		<script src="script.js"></script>
+	</body>
+</html>
+
