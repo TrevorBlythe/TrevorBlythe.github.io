@@ -10,11 +10,16 @@ class TextScrambler {
 		const oldText = this.el.innerText;
 		const length = Math.max(oldText.length, newText.length);
 		const promise = new Promise((resolve) => (this.resolve = resolve));
+		
+        // Stabilize layout: set min-width to current width to prevent jumping
+        this.el.style.minWidth = `${this.el.offsetWidth}px`;
+        this.el.style.display = 'inline-block';
+
 		this.queue = [];
 		for (let i = 0; i < length; i++) {
 			const from = oldText[i] || '';
 			const to = newText[i] || '';
-            const multiplier = (window.swapCount > 0) ? 0.1 : 1;
+            const multiplier = (window.swapCount > 0) ? (isMobile ? 0.05 : 0.1) : 1;
 			this.queue.push({
 				from,
 				to,
@@ -47,6 +52,7 @@ class TextScrambler {
 		}
 		this.el.innerHTML = output;
 		if (complete === this.queue.length) {
+            this.el.style.minWidth = ''; // Reset stability
 			this.resolve();
 		} else {
 			this.frameRequest = requestAnimationFrame(this.update);
@@ -67,11 +73,13 @@ let isPsychologyActive = false;
 const tiltedElements = [];
 
 const registerTiltedElement = (container, intensity = 2) => {
+    if (isMobile) return; // Disable for mobile
     if (tiltedElements.find(el => el.container === container)) return;
     tiltedElements.push({ container, intensity });
 };
 
 const updateAllPerspectiveTilts = (x, y) => {
+    if (isMobile) return;
     const { innerWidth, innerHeight } = window;
     const offsetX = (x - innerWidth / 2) / (innerWidth / 2);
     const offsetY = (y - innerHeight / 2) / (innerHeight / 2);
@@ -87,7 +95,7 @@ const updateAllPerspectiveTilts = (x, y) => {
 };
 
 document.addEventListener('mousemove', (e) => {
-    if (!isLocked) updateAllPerspectiveTilts(e.clientX, e.clientY);
+    if (!isLocked && !isMobile) updateAllPerspectiveTilts(e.clientX, e.clientY);
 });
 
 // Scramble Effects and Date Update will be handled by the initial swapContent call
@@ -440,7 +448,8 @@ const initParticles = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     particles = [];
-    for (let i = 0; i < 150; i++) {
+    const count = isMobile ? 40 : 150;
+    for (let i = 0; i < count; i++) {
         particles.push({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
@@ -520,8 +529,10 @@ const animateFractal = () => {
     const centerX = fractalCanvas.width / 2;
     const bottomY = fractalCanvas.height;
     
-    // One main central nerve starting from the bottom of the panel
-    drawNerve(centerX, bottomY, -Math.PI / 2, 8, 50, 0);
+    const depth = isMobile ? 5 : 8;
+    const length = isMobile ? 40 : 50;
+    
+    drawNerve(centerX, bottomY, -Math.PI / 2, depth, length, 0);
 
     fractalGrowth += 0.01;
 
@@ -543,6 +554,7 @@ animateFractal();
 
 // Glitch System
 const triggerGlitch = () => {
+    if (isMobile && Math.random() > 0.01) return; // Rare on mobile
 	const body = document.body;
 	const glitchType = Math.floor(Math.random() * 3);
 	

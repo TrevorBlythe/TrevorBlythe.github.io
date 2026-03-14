@@ -143,6 +143,11 @@ body {
 	-webkit-text-fill-color: transparent;
 	animation: shimmer 5s linear infinite;
 	text-shadow: 0 0 20px rgba(255, 158, 59, 0.3);
+    min-height: 1.2em; /* Prevent jump during scramble */
+}
+
+.scramble {
+    display: inline-block;
 }
 
 h2, .flag, .status-label, .stat-counter, .stat-label, .copy-hint {
@@ -778,21 +783,55 @@ body.trap-active #trap-overlay {
 }
 
 @media (max-width: 900px) {
+    :root {
+        --bg-size: 30px 30px;
+    }
+    body {
+        background-size: var(--bg-size);
+    }
 	.wrapper {
 		grid-template-columns: 1fr;
+        padding: 2rem 1.5rem;
+        gap: 1.5rem;
 	}
+    .main-content {
+        padding: 1.5rem;
+    }
+    .main-content h1 {
+        font-size: 2.2rem;
+    }
 	.sidebar {
 		order: -1;
 	}
 	.profile-pic-space {
-		max-width: 300px;
+		max-width: 250px;
 		margin: 0 auto;
 	}
     #fake-cursor {
         display: none !important;
     }
     .crt-panel::before {
-        opacity: 0.5; /* Tone down on mobile */
+        opacity: 0.3; /* Further tone down */
+    }
+    .terminal-prompt {
+        font-size: 0.75rem;
+        flex-wrap: wrap;
+    }
+    .header {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .main-content h1 {
+        font-size: 1.8rem;
+    }
+    .flag {
+        font-size: 0.7rem;
+        padding: 0.1rem 0.6rem;
+    }
+    .main-content p {
+        font-size: 0.95rem;
     }
 }
 
