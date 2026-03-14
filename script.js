@@ -14,11 +14,12 @@ class TextScrambler {
 		for (let i = 0; i < length; i++) {
 			const from = oldText[i] || '';
 			const to = newText[i] || '';
+            const multiplier = (window.swapCount > 0) ? 0.1 : 1;
 			this.queue.push({
 				from,
 				to,
-				start: Math.floor(Math.random() * 20),
-				end: Math.floor(Math.random() * 20) + 20,
+				start: Math.floor(Math.random() * 20 * multiplier),
+				end: Math.floor((Math.random() * 20 + 20) * multiplier),
 			});
 		}
 		cancelAnimationFrame(this.frameRequest);
@@ -56,13 +57,41 @@ class TextScrambler {
 		return this.chars[Math.floor(Math.random() * this.chars.length)];
 	}
 }
+// Mouse & State Tracking
+let mouseX = window.innerWidth / 2;
+let mouseY = window.innerHeight / 2;
+let isLocked = false;
+let isPsychologyActive = false;
 
-// Initialize Scramble Effects
-document.querySelectorAll('.scramble').forEach((el) => {
-	const scrambler = new TextScrambler(el);
-	const text = el.getAttribute('data-text') || el.innerText;
-	scrambler.scramble(text);
+// 3D Perspective Depth System
+const tiltedElements = [];
+
+const registerTiltedElement = (container, intensity = 2) => {
+    if (tiltedElements.find(el => el.container === container)) return;
+    tiltedElements.push({ container, intensity });
+};
+
+const updateAllPerspectiveTilts = (x, y) => {
+    const { innerWidth, innerHeight } = window;
+    const offsetX = (x - innerWidth / 2) / (innerWidth / 2);
+    const offsetY = (y - innerHeight / 2) / (innerHeight / 2);
+
+    tiltedElements.forEach(item => {
+        const { container, intensity } = item;
+        if (!container || !document.contains(container)) return;
+        const rotateX = offsetY * -intensity;
+        const rotateY = offsetX * intensity;
+        container.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        container.style.boxShadow = `${offsetX * -5}px ${offsetY * -5}px 20px rgba(0, 255, 255, 0.1)`;
+    });
+};
+
+document.addEventListener('mousemove', (e) => {
+    if (!isLocked) updateAllPerspectiveTilts(e.clientX, e.clientY);
 });
+
+// Scramble Effects and Date Update will be handled by the initial swapContent call
+
 
 // Dynamic Date Logic
 const updateSystemDates = () => {
@@ -79,13 +108,14 @@ const updateSystemDates = () => {
 		}
 	});
 };
+// updateSystemDates() will be called inside swapContent
 
-updateSystemDates();
 
 // Stats Animation Logic
 const SECTIONS = {
 	'nav-about': {
 		title: 'Trevor Blythe Software Developer',
+        dir: '/about',
 		content: `
 			<div class="status-label">[ 2026.03.13 ] [ ID: 4aa7-c618 ]</div>
 			<h1 id="title" class="scramble" data-text="Trevor Blythe">Trevor Blythe</h1>
@@ -118,8 +148,9 @@ const SECTIONS = {
 	},
 	'nav-contact': {
 		title: 'Contact Information',
+        dir: '/contact',
 		content: `
-			<div class="status-label">[ CHANNEL: ENCRYPTED ]</div>
+			<div class="status-label">[ EMAIL ME ]</div>
 			<h1 id="title" class="scramble" data-text="ESTABLISH_CONNECTION">ESTABLISH_CONNECTION</h1>
 
 			<div class="flag">DIRECT_LINE</div>
@@ -140,39 +171,90 @@ const SECTIONS = {
 	},
 	'nav-projects': {
 		title: 'Project Repository',
+        dir: '/projects',
 		content: `
-			<div class="status-label">[ REPO: CLONING... ]</div>
+			<div class="status-label">[ STUFF I DID ]</div>
 			<h1 id="title" class="scramble" data-text="PROJECT_CATALOGUE">PROJECT_CATALOGUE</h1>
 
-			<div class="flag">MentisJS & RustSimpleDNN</div>
-			<p>
-				Modular ML tool for building neural networks in JS on any GPU/CPU. Implemented CNNs, evolutionary algorithms, and backprop from scratch. Ported to Rust; available on crates.io.
-			</p>
+            <div class="project-list">
+                <div class="project-card crt-panel">
+                    <div class="project-card-header">
+                        <span class="project-id">PID-082</span>
+                        <span class="project-status">Deployment: Active</span>
+                    </div>
+                    <h3 class="scramble" data-text="MentisJS & RustSimpleDNN">MentisJS & RustSimpleDNN</h3>
+                    <p>Modular ML tool for building neural networks in JS on any GPU/CPU. Implemented CNNs, evolutionary algorithms, and backprop from scratch. Ported to Rust; available on crates.io.</p>
+                    <div class="project-tags">
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">Rust</span>
+                        <span class="tag">Machine Learning</span>
+                        <span class="tag">GPU/CPU</span>
+                    </div>
+                </div>
 
-			<div class="flag">Meta OpenXR App</div>
-			<p>
-				Real-time P2P multiplayer VR app with >100k players. Built with Meta SDK, Firebase, and OpenXR. Implemented custom signaling server on Firebase.
-			</p>
+                <div class="project-card crt-panel">
+                    <div class="project-card-header">
+                        <span class="project-id">PID-114</span>
+                        <span class="project-status">Deployment: Active</span>
+                    </div>
+                    <h3 class="scramble" data-text="Meta OpenXR App">Meta OpenXR App</h3>
+                    <p>Real-time P2P multiplayer VR app with >100k players. Built with Meta SDK, Firebase, and OpenXR. Implemented custom signaling server on Firebase.</p>
+                    <div class="project-tags">
+                        <span class="tag">OpenXR</span>
+                        <span class="tag">VR</span>
+                        <span class="tag">Firebase</span>
+                        <span class="tag">Multiplayer</span>
+                    </div>
+                </div>
 
-			<div class="flag">Cellular Automata</div>
-			<p>
-				High-performance 2D simulation engine for studying emergent behaviors in cellular automata. 
-			</p>
+                <div class="project-card crt-panel">
+                    <div class="project-card-header">
+                        <span class="project-id">PID-044</span>
+                        <span class="project-status">Stable</span>
+                    </div>
+                    <h3 class="scramble" data-text="Cellular Automata">Cellular Automata</h3>
+                    <p>High-performance 2D simulation engine for studying emergent behaviors in cellular automata.</p>
+                    <div class="project-tags">
+                        <span class="tag">Simulation</span>
+                        <span class="tag">Algorithms</span>
+                        <span class="tag">Visualization</span>
+                    </div>
+                </div>
+            </div>
 			
 			<div class="status-label">[ Activities: FBLA, A-State Game Dev ]</div>
 		`
 	}
 };
 
-const swapContent = (sectionId) => {
+window.swapCount = 0;
+
+const glitchTransition = (container) => {
+    return new Promise((resolve) => {
+        const multiplier = (window.swapCount > 0) ? 0.05 : 1;
+        
+        // Digital glitch without the white flash
+        container.style.filter = 'hue-rotate(90deg) contrast(150%) skew(2deg)';
+        
+        setTimeout(() => {
+            container.style.filter = 'hue-rotate(-45deg) contrast(120%)';
+            setTimeout(() => {
+                container.style.filter = 'none';
+                resolve();
+            }, 50 * multiplier);
+        }, 80 * multiplier);
+    });
+};
+
+const swapContent = async (sectionId) => {
 	const container = document.getElementById('dynamic-content');
 	if (!container || !SECTIONS[sectionId]) return;
 
-	// Flash the background to signify data update
-	container.style.background = 'rgba(255, 158, 59, 0.2)';
-	setTimeout(() => {
-		container.style.background = 'var(--bg-panel)';
-	}, 100);
+    // Update Directory Prompt
+    const dirDisplay = document.getElementById('current-dir');
+    if (dirDisplay) dirDisplay.textContent = SECTIONS[sectionId].dir;
+
+    await glitchTransition(container);
 
 	container.innerHTML = SECTIONS[sectionId].content;
 
@@ -183,13 +265,24 @@ const swapContent = (sectionId) => {
 		scrambler.scramble(text);
 	});
 
+    // Re-initialize 3D tilt for new components (like project cards)
+    if (typeof registerTiltedElement === 'function') {
+        document.querySelectorAll('.project-card').forEach(card => {
+            registerTiltedElement(card, 3); // Lowered card intensity
+        });
+    }
+
 	updateSystemDates();
+    window.swapCount++;
 };
 
-document.querySelectorAll('.header-nav h2').forEach((nav) => {
-	nav.addEventListener('click', () => {
-		swapContent(nav.id);
-	});
+// Consolidated Navigation Handler
+document.addEventListener('click', (e) => {
+    const navLink = e.target.closest('.nav-link');
+    if (navLink) {
+        swapContent(navLink.id);
+        // Do NOT return here, let the mouse capture logic below run
+    }
 });
 
 const animateStat = (barId, counterId, targetValue, delay) => {
@@ -213,21 +306,27 @@ const animateStat = (barId, counterId, targetValue, delay) => {
 	}, delay);
 };
 
+// Mobile/Touch Detection
+const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+const isSmallScreen = window.innerWidth < 900;
+const isMobile = isTouchDevice || isSmallScreen;
+
 // Trigger Stats
 animateStat('statOne', 'statOneCounter', 85, 1000); // JS
 animateStat('statTwo', 'statTwoCounter', 45, 1200); // C++
 animateStat('statThree', 'statThreeCounter', 60, 1400); // Rust
 
 // Mouse Capture Logic
-let isLocked = false;
-let mouseX = window.innerWidth / 2;
-let mouseY = window.innerHeight / 2;
 let isSelecting = false;
 let selectionStartCaret = null;
 let isEscaping = false;
 let isKindActive = false;
 const fakeCursor = document.getElementById('fake-cursor');
 const trapWarning = document.getElementById('trap-warning');
+
+if (isMobile && fakeCursor) {
+    fakeCursor.style.display = 'none';
+}
 
 // Helper to get caret position across browsers
 const getCaretData = (x, y) => {
@@ -256,7 +355,10 @@ document.addEventListener('mouseup', () => {
 });
 
 document.addEventListener('click', (e) => {
-	if (!e.isTrusted) return; // Prevent infinite loop from manual clicks
+	if (!e.isTrusted || isMobile) return; 
+
+    // Don't capture mouse if we're clicking a button (except nav links, we WANT capture there)
+    if (e.target.closest('button') && !e.target.closest('.nav-link')) return;
 
 	if (!isLocked) {
 		mouseX = e.clientX;
@@ -502,6 +604,11 @@ document.addEventListener('mousemove', (e) => {
             const intensity = Math.max(0, 1 - dist / 300);
             bar.style.boxShadow = `0 0 ${10 + intensity * 20}px rgba(255, 158, 59, ${0.2 + intensity * 0.8})`;
         });
+        
+        // Update 3D Perspective Tilts
+        if (typeof updateAllPerspectiveTilts === 'function') {
+            updateAllPerspectiveTilts(mouseX, mouseY);
+        }
 
 		// Profile Image Hover Detection
 		const profileImg = document.querySelector('.profile-img');
@@ -583,7 +690,6 @@ document.addEventListener('copy', () => {
 });
 
 // Fullscreen Trap
-let isPsychologyActive = false;
 let entrapmentSeconds = 0;
 
 // Global entrapment timer starting on page load
@@ -741,6 +847,20 @@ window.addEventListener('focus', () => {
 
 
 
+// Initialize 3D Depth on Panels & Cards
+const init3D = () => {
+    const mainContent = document.querySelector('.main-content');
+    const sidebar = document.querySelector('.sidebar');
+    if (mainContent) registerTiltedElement(mainContent, 1.0); 
+    if (sidebar) registerTiltedElement(sidebar, 0.6);
+};
+
+init3D();
+
 // Console Log for Aesthetic
 console.log('%c[ SYSTEM: INITIALIZED ]', 'color: #ff9e3b; font-weight: bold;');
 console.log('%c[ READY FOR INPUT ]', 'color: #ff9e3b;');
+console.log('%c[ 3D_PERSPECTIVE: ACTIVE ]', 'color: #ff9e3b;');
+
+// Trigger initial landings glitch
+swapContent('nav-about');

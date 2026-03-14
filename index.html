@@ -22,13 +22,17 @@
 		<div class="terminal-grid"></div>
 		
 		<header class="header">
-			<div class="header-nav">
-				<h2 id="nav-about" class="scramble" data-text="ABOUT_ME">ABOUT_ME</h2>
-				<h2 id="nav-contact" class="scramble" data-text="CONTACT">CONTACT</h2>
-				<h2 id="nav-projects" class="scramble" data-text="PROJECTS">PROJECTS</h2>
-				<button id="leave-btn" class="leave-btn">Leave Site</button>
+			<div class="terminal-prompt">
+				<span class="prompt-user">Links</span>:<span class="prompt-dir" id="current-dir">~</span>$ 
+				<div class="header-nav">
+					<span id="nav-about" class="scramble nav-link" data-text="About">About</span>
+					<span id="nav-projects" class="scramble nav-link" data-text="Projects">Projects</span>
+					<span id="nav-contact" class="scramble nav-link" data-text="Contact">Contact</span>
+				</div>
+				<span class="terminal-cursor">_</span>
 			</div>
 			<div class="status-label">[ Welcome ]</div>
+			<button id="leave-btn" class="leave-btn">Leave Site</button>
 		</header>
 
 		<main class="wrapper">
@@ -67,8 +71,8 @@
 					<img src="profile.jpg" alt="Trevor Blythe" class="profile-img">
 				</div>
 
-				<div id="stats" class="stats">
-					<div class="flag">SYSTEM_DIAGNOSTICS</div>
+				<div id="stats" class="stats crt-panel">
+					<div class="flag">Random graphs</div>
 										<div class="stat-item">
 							<div class="stat-label">JS</div>
 							<div class="stat-bar-container">
@@ -94,19 +98,21 @@
 					<div class="status-label">[ LOG: CORE_METRICS_LOADED ]</div>
 					
 					<div class="flag">WATCHER_TERMINAL</div>
-					<div id="watcher-panel" class="watcher-panel">
+					<div id="watcher-panel" class="watcher-panel crt-panel">
 						<div class="watcher-line">[ SYSTEM ] Initializing surveillance...</div>
 					</div>
 					
 				</div>
 
-				<div class="stats">
+				<div class="stats crt-panel">
 					<div class="flag">Message from me</div>
 					<div class="user-panel-content">
 						Programming is just telling the computer what to do.<br>
 						I would choose the tool that makes it easiest.<br>
 						Complicated things, are made of simpler things.<br>
-						AI is correlated with data breaches.<br>
+						Hacking is sitting there digging for a <br>
+						mistake gambling your time for something that <br>
+						might not even be there.<br>
 						Ive done all of this: 
 						Microcontrollers, Hosted a website (not this), <br>
 						A multiplayer game, neural networks from scratch <br>
