@@ -448,7 +448,8 @@ const initParticles = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     particles = [];
-    const count = isMobile ? 40 : 150;
+    if (isMobile) return; // Completely disable on mobile
+    const count = 150;
     for (let i = 0; i < count; i++) {
         particles.push({
             x: Math.random() * canvas.width,
@@ -461,7 +462,7 @@ const initParticles = () => {
 };
 
 const drawParticles = () => {
-    if (!ctx) return;
+    if (!ctx || isMobile) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.strokeStyle = '#ff9e3b';
     ctx.lineWidth = 2;
@@ -521,7 +522,7 @@ const drawNerve = (x1, y1, angle, depth, length, currentDepth) => {
 };
 
 const animateFractal = () => {
-    if (!fctx || !isFractalGrowing) return;
+    if (!fctx || !isFractalGrowing || isMobile) return;
 
     fctx.clearRect(0, 0, fractalCanvas.width, fractalCanvas.height);
     fctx.lineCap = 'round';
@@ -554,7 +555,7 @@ animateFractal();
 
 // Glitch System
 const triggerGlitch = () => {
-    if (isMobile && Math.random() > 0.01) return; // Rare on mobile
+    if (isMobile) return; // Completely disable body glitches on mobile
 	const body = document.body;
 	const glitchType = Math.floor(Math.random() * 3);
 	
